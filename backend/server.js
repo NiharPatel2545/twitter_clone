@@ -16,5 +16,3 @@ app.listen(PORT, () => {
     connectMongoDB();
 })
 
-
-//2:33:47 

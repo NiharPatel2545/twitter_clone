@@ -21,9 +21,37 @@ export const signup = async (req, res) => {
       }
 
       const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      const newUser = new User({
+        fullName,
+        username,
+        email,
+        password: hashedPassword,
+      })
+
+      if (newUser) {
+        generateTokenAndSetCookie(newUser.id, res);
+        await newUser.save();
+
+        res.status(201).json({
+          _id: newUser._id,
+          fullname: newUser.fullName,
+          email: newUser.email,
+          username: newUser.username,
+          profileImg: newUser.profileImg,
+          coverImg: newUser.coverImg,
+          followers: newUser.followers,
+          following: newUser.following,
+        })
+      } else {
+        res.status(400).json({ error: "Invalid user data"});
+      }
 
     } catch (error) {
-      
+      console.log("Error in signup controller:", error.message);
+
+      res.status(500).jsonn({ error: "Internal server error" });
     }
 }
 
@@ -38,5 +66,3 @@ export const logout = async (req, res) => {
       data: "You hit the logout endpoint",
     });
 }
-
-//2:53:06
