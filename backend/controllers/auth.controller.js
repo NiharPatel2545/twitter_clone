@@ -7,12 +7,12 @@ export const signup = async (req, res) => {
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
       if(!emailRegex.test(email)){
-        return res.status(400).json({ error: "Ivalid email format" });
+        return res.status(400).json({ error: "Invalid email format" });
       }
 
       const existingUser = await User.findOne({ username });
       if(existingUser){
-        return res.status(400).json({ error: "Userame is already taken" })
+        return res.status(400).json({ error: "Username is already taken" })
       }
 
       const existingEmail = await User.findOne({ email });
@@ -51,7 +51,7 @@ export const signup = async (req, res) => {
     } catch (error) {
       console.log("Error in signup controller:", error.message);
 
-      res.status(500).jsonn({ error: "Internal server error" });
+      res.status(500).json({ error: "Internal server error" });
     }
 }
 
