@@ -21,6 +21,19 @@ export const followUnfollowUser = async (req, res) => {
         if(id === req.user._id){
             return res.status(400).json({ error: "You cannot follow or unfollow yourself" });
         }
+
+        if(!userToModify || !currentUser){
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const isFollowing = currentUser.following.includes(id);
+
+        if(isFollowing){
+
+        } else{
+            await User.findByIdAndUpdate(id, { $push: { followers: req.user._id } });
+            await User.findByIdAndUpdate(req.user._id, { $push: { following: id } });
+        }
     } catch (error) {
         console.log("Error in getUserProfile controller", error.message);
         res.status(500).json({error: error.message});
