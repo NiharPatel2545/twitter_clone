@@ -30,9 +30,13 @@ export const followUnfollowUser = async (req, res) => {
 
         if(isFollowing){
 
+            await User.findByIdAndUpdate(id, { $pull: { followers: req.user._id } });
+
         } else{
+
             await User.findByIdAndUpdate(id, { $push: { followers: req.user._id } });
             await User.findByIdAndUpdate(req.user._id, { $push: { following: id } });
+
         }
     } catch (error) {
         console.log("Error in getUserProfile controller", error.message);
