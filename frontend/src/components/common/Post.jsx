@@ -13,8 +13,8 @@ import { formatPostDate } from "../../utils/date";
 
 const Post = ({ post }) => {
 	const [comment, setComment] = useState("");
-	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 	const queryClient = useQueryClient();
+			const authUser = queryClient.getQueryData(["authUser"]);
 	const postOwner = post.user;
 	const isLiked = post.likes.includes(authUser._id);
 
