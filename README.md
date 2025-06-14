@@ -50,6 +50,14 @@ A full-stack Twitter-style social media app built with React, Vite, Tailwind, an
 
 ---
 
+# backend/.env.example
+PORT=3000
+MONGO_URI=your-mongodb-uri
+JWT_SECRET=your-super-secret-key
+CLOUDINARY_API_KEY=your-key
+
+---
+
 - Folder Structure:
   root/
 ├── backend/
