@@ -6,9 +6,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    proxy: {
+    proxy: process.env.NODE_ENV === "development" ? {
       "/api": "http://localhost:3000",
-    },
+    } : undefined,
   },
   preview: {
     port: 5000, // This must match the PORT from Render
